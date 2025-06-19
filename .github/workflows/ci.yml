@@ -14,13 +14,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3       # Клонує репозиторій на GitHub Runner
+        uses: actions/checkout@v3
 
       - name: Set up Python 3.10
-        uses: actions/setup-python@v4   # Встановлює Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
       - name: Cache pip packages
-        uses: actions/cache@v3          # Кешує встановлені пакети pip для швидшої роботи
+        uses: actions/cache@v3
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -30,9 +32,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r flask_app/requirements.txt   # Встановлює всі залежності з requirements.txt
+          pip install -r requirements.txt   
 
       - name: Run tests
-        working-directory: ./flask_app                 # Змінює робочий каталог для команди pytest
-        run: pytest tests                              # Запускає тести у папці tests
+        run: pytest tests                   
 
