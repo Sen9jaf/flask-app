@@ -1,8 +1,12 @@
-FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+FROM python:3.10-slim
+
+WORKDIR /app/flask_app
+ENV PYTHONPATH=/app/flask_app
+
 COPY . .
-EXPOSE 5000
-CMD ["python", "app.py"]
+
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+CMD ["pytest", "tests"]
 
